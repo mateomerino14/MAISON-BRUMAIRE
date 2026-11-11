@@ -74,7 +74,7 @@ test: Prueba que el carrito no baja de cero unidades
 
 - El código se escribe en inglés: componentes, funciones, variables, tipos y constantes.
 - Los textos que ve el visitante, los comentarios y la documentación van en español.
-- Los nombres de los tés y de la casa van en francés, porque son parte de la marca.
+- Los nombres de los tés y de la casa van en francés, porque son parte de la marca. Todo lo demás que lee el visitante (títulos, botones, avisos, el carrito) va en español, sin frases decorativas en francés.
 
 ### Comentarios
 
