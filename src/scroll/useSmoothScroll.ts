@@ -22,7 +22,6 @@ export function useSmoothScroll(): void {
       }
       const first = stops[0]
       const raw = measureProgress(window.scrollY, window.innerHeight, first.offsetTop, first.offsetHeight)
-      scrollState.stopCount = stops.length
       scrollState.progress = clamp(raw, 0, stops.length - 1)
     }
 
