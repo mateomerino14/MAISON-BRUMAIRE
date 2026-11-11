@@ -1,15 +1,20 @@
-/* Variables de diseño: la bruma del Sena, porcelana, azul de Sèvres y filete de oro. */
+/* Variables de diseño: la bruma del Sena, porcelana, azul de Sèvres y filete de oro.
+   Fraunces (títulos) es una serif cálida de óptica variable; Figtree (texto) se lee bien en tamaños chicos. */
 :root {
   --brume: #c9d3d2;
-  --ink: #1e2b33;
-  --ink-soft: #46555d;
+  /* Texto: cada color supera 4.5:1 sobre la bruma y sobre la porcelana */
+  --ink: #16212a;
+  --text-body: #2a363d;
+  --navy: #1b2c5c;
+  --bordeaux: #6a2236;
+  --gold-text: #76561f;
   --porcelain: #f6f7f4;
   --sevres: #2b4c9b;
   --sevres-deep: #1f3a7a;
   --gold: #b08d57;
 
-  --display: 'Bodoni Moda', 'Didot', serif;
-  --text: 'Instrument Sans', system-ui, sans-serif;
+  --display: 'Fraunces', Georgia, serif;
+  --text: 'Figtree', system-ui, sans-serif;
 
   --step--1: 0.875rem;
   --step-0: 1.0625rem;
@@ -34,9 +39,9 @@ html {
 
 body {
   margin: 0;
-  color: var(--ink);
+  color: var(--text-body);
   font-family: var(--text);
-  font-size: var(--step-0);
+  font-size: 1.125rem;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
@@ -111,6 +116,7 @@ main {
 }
 
 .wordmark {
+  color: var(--navy);
   font-family: var(--display);
   font-style: italic;
   font-size: var(--step-1);
@@ -118,6 +124,7 @@ main {
 }
 
 .cart-button {
+  color: var(--ink);
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -141,12 +148,12 @@ main {
 
 /* Portada */
 .hero-title {
+  color: var(--navy);
   font-family: var(--display);
   font-weight: 400;
   font-size: clamp(4rem, 12.5vw, 13.5rem);
   line-height: 0.86;
-  letter-spacing: -0.035em;
-  font-variation-settings: 'opsz' 96;
+  letter-spacing: -0.03em;
   max-width: 7ch;
 }
 
@@ -156,6 +163,7 @@ main {
 }
 
 .hero-tagline {
+  color: var(--bordeaux);
   font-family: var(--display);
   font-style: italic;
   font-size: var(--step-2);
@@ -164,7 +172,7 @@ main {
 }
 
 .hero-intro {
-  color: var(--ink-soft);
+  color: var(--text-body);
 }
 
 .scroll-hint {
@@ -172,7 +180,7 @@ main {
   right: var(--gutter);
   bottom: var(--gutter);
   font-size: var(--step--1);
-  color: var(--ink-soft);
+  color: var(--text-body);
   padding-bottom: 48px;
 }
 
@@ -218,6 +226,7 @@ main {
 .ritual-text h2,
 .collection-title,
 .closing-text h2 {
+  color: var(--navy);
   font-family: var(--display);
   font-weight: 400;
   font-size: var(--step-4);
@@ -229,7 +238,7 @@ main {
 .story-text p {
   font-size: 1.1875rem;
   line-height: 1.65;
-  color: var(--ink-soft);
+  color: var(--text-body);
 }
 
 /* Colección */
@@ -263,6 +272,7 @@ main {
 }
 
 .tea-entry h3 {
+  color: var(--navy);
   font-family: var(--display);
   font-style: italic;
   font-weight: 400;
@@ -272,16 +282,17 @@ main {
 
 .tea-family {
   font-size: var(--step--1);
-  color: var(--ink-soft);
+  color: var(--text-body);
 }
 
 .tea-notes {
+  color: var(--ink);
   font-weight: 500;
 }
 
 .tea-description {
   font-size: var(--step--1);
-  color: var(--ink-soft);
+  color: var(--text-body);
   line-height: 1.5;
 }
 
@@ -296,6 +307,7 @@ main {
 }
 
 .tea-price {
+  color: var(--bordeaux);
   font-family: var(--display);
   font-size: var(--step-1);
   font-variant-numeric: lining-nums;
@@ -356,16 +368,18 @@ main {
   font-family: var(--display);
   font-size: var(--step-3);
   line-height: 0.9;
-  color: var(--gold);
+  font-weight: 500;
+  color: var(--gold-text);
 }
 
 .ritual-steps h3 {
+  color: var(--ink);
   font-size: var(--step-0);
   font-weight: 600;
 }
 
 .ritual-steps p {
-  color: var(--ink-soft);
+  color: var(--text-body);
 }
 
 /* Cierre */
@@ -393,7 +407,7 @@ main {
 .site-footer {
   max-width: 62ch;
   font-size: var(--step--1);
-  color: var(--ink-soft);
+  color: var(--text-body);
   display: grid;
   gap: 6px;
 }
@@ -439,13 +453,14 @@ main {
 }
 
 .drawer-head h2 {
+  color: var(--navy);
   font-family: var(--display);
   font-weight: 400;
   font-size: var(--step-2);
 }
 
 .drawer-message {
-  color: var(--ink-soft);
+  color: var(--text-body);
 }
 
 .cart-lines {
@@ -467,6 +482,7 @@ main {
 }
 
 .cart-line-name {
+  color: var(--navy);
   font-family: var(--display);
   font-style: italic;
   font-size: 1.15rem;
@@ -474,7 +490,7 @@ main {
 
 .cart-line-price {
   font-size: var(--step--1);
-  color: var(--ink-soft);
+  color: var(--text-body);
 }
 
 .stepper {
@@ -493,6 +509,7 @@ main {
 }
 
 .drawer-total {
+  color: var(--ink);
   display: flex;
   justify-content: space-between;
   padding-top: 14px;
@@ -508,7 +525,7 @@ main {
 
 .drawer-note {
   font-size: var(--step--1);
-  color: var(--ink-soft);
+  color: var(--text-body);
 }
 
 /* Cortina de carga */
@@ -537,6 +554,38 @@ main {
 .loader[data-done='true'] {
   opacity: 0;
   pointer-events: none;
+}
+
+/* Velo de bruma: aclara el fondo detrás de los textos que pasan sobre la escena */
+.hero-copy,
+.story-text,
+.ritual-text,
+.closing-text {
+  position: relative;
+  isolation: isolate;
+}
+
+.hero-copy::before,
+.story-text::before,
+.ritual-text::before,
+.closing-text::before {
+  content: '';
+  position: absolute;
+  inset: -64px -80px;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    closest-side,
+    rgb(201 211 210 / 0.92),
+    rgb(201 211 210 / 0.7) 55%,
+    rgb(201 211 210 / 0)
+  );
+}
+
+.hero-intro,
+.story-text p,
+.ritual-steps p {
+  font-weight: 450;
 }
 
 /* Pantallas bajas: el catálogo se compacta para no tapar las latas */
@@ -572,6 +621,11 @@ main {
   .story .stop-frame,
   .ritual .stop-frame {
     justify-content: flex-end;
+  }
+
+  .story-text::before,
+  .ritual-text::before {
+    display: none;
   }
 
   .story-right .stop-frame {
