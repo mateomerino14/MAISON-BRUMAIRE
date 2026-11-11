@@ -1,0 +1,18 @@
+# Dependencias y compilación
+node_modules/
+dist/
+*.local
+
+# Registros
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+.ruff_cache/
+
+# Editor y sistema
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
