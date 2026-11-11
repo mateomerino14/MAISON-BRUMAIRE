@@ -556,6 +556,38 @@ main {
   pointer-events: none;
 }
 
+/* Velo de bruma: aclara el fondo detrás de los textos que pasan sobre la escena */
+.hero-copy,
+.story-text,
+.ritual-text,
+.closing-text {
+  position: relative;
+  isolation: isolate;
+}
+
+.hero-copy::before,
+.story-text::before,
+.ritual-text::before,
+.closing-text::before {
+  content: '';
+  position: absolute;
+  inset: -64px -80px;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    closest-side,
+    rgb(201 211 210 / 0.92),
+    rgb(201 211 210 / 0.7) 55%,
+    rgb(201 211 210 / 0)
+  );
+}
+
+.hero-intro,
+.story-text p,
+.ritual-steps p {
+  font-weight: 450;
+}
+
 /* Pantallas bajas: el catálogo se compacta para no tapar las latas */
 @media (max-height: 820px) and (min-width: 761px) {
   .collection-title {
@@ -589,6 +621,11 @@ main {
   .story .stop-frame,
   .ritual .stop-frame {
     justify-content: flex-end;
+  }
+
+  .story-text::before,
+  .ritual-text::before {
+    display: none;
   }
 
   .story-right .stop-frame {
