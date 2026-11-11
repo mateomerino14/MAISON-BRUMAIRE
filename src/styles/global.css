@@ -539,6 +539,22 @@ main {
   pointer-events: none;
 }
 
+/* Pantallas bajas: el catálogo se compacta para no tapar las latas */
+@media (max-height: 820px) and (min-width: 761px) {
+  .collection-title {
+    font-size: var(--step-3);
+  }
+
+  .tea-entry {
+    padding: 14px 18px 14px;
+    gap: 4px;
+  }
+
+  .tea-description {
+    display: none;
+  }
+}
+
 /* Pantallas angostas */
 @media (max-width: 760px) {
   :root {

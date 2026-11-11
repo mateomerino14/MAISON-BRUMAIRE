@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { COLLECTION_RISE, collectionReveal, CUP_FILL, cupFill, leafFlight, lidPose, TEAPOT_LIFT, TEAPOT_RETURN, teapotPose } from './timeline'
+import { COLLECTION_RISE, collectionReveal, CUP_FILL, cupFill, featureTinPresence, leafFlight, lidPose, TEAPOT_LIFT, TEAPOT_RETURN, teapotPose } from './timeline'
 
 describe('teapotPose', () => {
   it('la tetera descansa antes y después del ritual', () => {
@@ -46,5 +46,18 @@ describe('collectionReveal', () => {
   it('cada lata llega un poco después que la anterior', () => {
     const middle = (COLLECTION_RISE.from + COLLECTION_RISE.to) / 2
     expect(collectionReveal(middle, 0)).toBeGreaterThan(collectionReveal(middle, 2))
+  })
+})
+
+describe('featureTinPresence', () => {
+  it('la lata no está en la portada, el ritual ni el cierre', () => {
+    expect(featureTinPresence(0)).toBe(0)
+    expect(featureTinPresence(5)).toBe(0)
+    expect(featureTinPresence(6)).toBe(0)
+  })
+
+  it('la lata está completa en su sección y en la de las hojas', () => {
+    expect(featureTinPresence(2)).toBe(1)
+    expect(featureTinPresence(3)).toBe(1)
   })
 })
