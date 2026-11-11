@@ -306,6 +306,18 @@ main {
   flex-wrap: wrap;
 }
 
+.tea-buy button {
+  white-space: nowrap;
+}
+
+/* Ocupa su propia línea arriba del precio, así el precio y el botón quedan alineados en las cuatro fichas */
+.tea-in-cart {
+  flex-basis: 100%;
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--navy);
+}
+
 .tea-price {
   color: var(--bordeaux);
   font-family: var(--display);
