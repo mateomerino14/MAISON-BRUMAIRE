@@ -1,0 +1,596 @@
+/* Variables de diseño: la bruma del Sena, porcelana, azul de Sèvres y filete de oro. */
+:root {
+  --brume: #c9d3d2;
+  --ink: #1e2b33;
+  --ink-soft: #46555d;
+  --porcelain: #f6f7f4;
+  --sevres: #2b4c9b;
+  --sevres-deep: #1f3a7a;
+  --gold: #b08d57;
+
+  --display: 'Bodoni Moda', 'Didot', serif;
+  --text: 'Instrument Sans', system-ui, sans-serif;
+
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.4rem;
+  --step-2: 1.875rem;
+  --step-3: 2.5rem;
+  --step-4: 3.33rem;
+
+  --gutter: clamp(20px, 5vw, 72px);
+  --stop-height: 130vh;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--brume);
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--text);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+p,
+ol,
+ul {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--sevres);
+  outline-offset: 3px;
+}
+
+/* Escena fija detrás del contenido */
+.scene {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+/* Cada parada mide lo mismo; su marco queda fijo mientras la sección pasa */
+.stop {
+  height: var(--stop-height);
+}
+
+.stop-frame {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: calc(var(--gutter) + 56px) var(--gutter) var(--gutter);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Encabezado */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px var(--gutter);
+}
+
+.wordmark {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: var(--step-1);
+  text-decoration: none;
+}
+
+.cart-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 8px 8px 16px;
+  border: 1px solid var(--ink);
+  border-radius: 2px;
+  background: transparent;
+  font-weight: 500;
+}
+
+.cart-count {
+  min-width: 26px;
+  height: 26px;
+  display: inline-grid;
+  place-items: center;
+  background: var(--sevres);
+  color: var(--porcelain);
+  font-size: var(--step--1);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Portada */
+.hero-title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(4rem, 12.5vw, 13.5rem);
+  line-height: 0.86;
+  letter-spacing: -0.035em;
+  font-variation-settings: 'opsz' 96;
+  max-width: 7ch;
+}
+
+.hero-copy {
+  margin-top: auto;
+  max-width: 34ch;
+}
+
+.hero-tagline {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: var(--step-2);
+  line-height: 1.2;
+  margin-bottom: 14px;
+}
+
+.hero-intro {
+  color: var(--ink-soft);
+}
+
+.scroll-hint {
+  position: absolute;
+  right: var(--gutter);
+  bottom: var(--gutter);
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+  padding-bottom: 48px;
+}
+
+.scroll-hint::after {
+  content: '';
+  position: absolute;
+  right: 50%;
+  bottom: 0;
+  width: 1px;
+  height: 36px;
+  background: var(--ink);
+  transform-origin: top;
+  animation: hint-drop 2.4s ease-in-out infinite;
+}
+
+@keyframes hint-drop {
+  0% {
+    transform: scaleY(0);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 0;
+  }
+}
+
+/* Paradas de texto */
+.story .stop-frame {
+  justify-content: center;
+}
+
+.story-right .stop-frame {
+  align-items: flex-end;
+}
+
+.story-text {
+  max-width: 30ch;
+}
+
+.story-text h2,
+.ritual-text h2,
+.collection-title,
+.closing-text h2 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: var(--step-4);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+
+.story-text p {
+  font-size: 1.1875rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+/* Colección */
+.collection .stop-frame {
+  justify-content: space-between;
+}
+
+.collection-title {
+  max-width: 10ch;
+}
+
+.tea-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  background: rgb(246 247 244 / 0.86);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--gold);
+}
+
+.tea-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 22px 22px 20px;
+  border-left: 1px solid rgb(176 141 87 / 0.5);
+  box-shadow: inset 0 4px 0 var(--tea-color);
+}
+
+.tea-entry:first-child {
+  border-left: 0;
+}
+
+.tea-entry h3 {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--step-1);
+  line-height: 1.15;
+}
+
+.tea-family {
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+.tea-notes {
+  font-weight: 500;
+}
+
+.tea-description {
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+.tea-buy {
+  margin-top: auto;
+  padding-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tea-price {
+  font-family: var(--display);
+  font-size: var(--step-1);
+  font-variant-numeric: lining-nums;
+}
+
+.tea-buy button,
+.button-primary {
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 2px;
+  background: var(--sevres);
+  color: var(--porcelain);
+  font-weight: 500;
+  font-size: var(--step--1);
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.tea-buy button:hover,
+.button-primary:hover {
+  background: var(--sevres-deep);
+}
+
+.button-quiet {
+  padding: 10px 16px;
+  border: 1px solid var(--ink);
+  border-radius: 2px;
+  background: transparent;
+  font-weight: 500;
+  font-size: var(--step--1);
+}
+
+/* Ritual */
+.ritual .stop-frame {
+  justify-content: center;
+}
+
+.ritual-text {
+  max-width: 28ch;
+}
+
+.ritual-steps {
+  counter-reset: step;
+  display: grid;
+  gap: 22px;
+}
+
+.ritual-steps li {
+  counter-increment: step;
+  display: grid;
+  grid-template-columns: 2.2rem 1fr;
+  column-gap: 14px;
+}
+
+.ritual-steps li::before {
+  content: counter(step);
+  grid-row: span 2;
+  font-family: var(--display);
+  font-size: var(--step-3);
+  line-height: 0.9;
+  color: var(--gold);
+}
+
+.ritual-steps h3 {
+  font-size: var(--step-0);
+  font-weight: 600;
+}
+
+.ritual-steps p {
+  color: var(--ink-soft);
+}
+
+/* Cierre */
+.closing .stop-frame {
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+
+.closing-text {
+  margin-top: 10vh;
+}
+
+.closing-text h2 {
+  font-size: clamp(3rem, 7vw, 6rem);
+}
+
+.closing-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.site-footer {
+  max-width: 62ch;
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+  display: grid;
+  gap: 6px;
+}
+
+/* Carrito */
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 8;
+  background: rgb(30 43 51 / 0.28);
+}
+
+.cart-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9;
+  width: min(420px, 100vw);
+  padding: 22px 26px;
+  background: var(--porcelain);
+  border-left: 1px solid var(--gold);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  transform: translateX(100%);
+  visibility: hidden;
+  transition:
+    transform 0.35s ease,
+    visibility 0s linear 0.35s;
+}
+
+.cart-drawer[data-open='true'] {
+  transform: none;
+  visibility: visible;
+  transition: transform 0.35s ease;
+}
+
+.drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.drawer-head h2 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: var(--step-2);
+}
+
+.drawer-message {
+  color: var(--ink-soft);
+}
+
+.cart-lines {
+  display: grid;
+  gap: 16px;
+  overflow-y: auto;
+}
+
+.cart-line {
+  display: grid;
+  grid-template-columns: 10px 1fr auto;
+  gap: 14px;
+  align-items: center;
+}
+
+.cart-swatch {
+  width: 10px;
+  height: 40px;
+}
+
+.cart-line-name {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.15rem;
+}
+
+.cart-line-price {
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.stepper button {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--ink);
+  border-radius: 2px;
+  background: transparent;
+}
+
+.drawer-total {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top: 1px solid var(--gold);
+  font-family: var(--display);
+  font-size: var(--step-1);
+}
+
+.drawer-confirm {
+  padding: 14px;
+  font-size: var(--step-0);
+}
+
+.drawer-note {
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+/* Cortina de carga */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-content: center;
+  gap: 16px;
+  background: var(--brume);
+  font-family: var(--display);
+  font-style: italic;
+  font-size: var(--step-2);
+  transition: opacity 0.9s ease;
+}
+
+.loader-bar {
+  display: block;
+  height: 1px;
+  background: var(--gold);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.loader[data-done='true'] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Pantallas angostas */
+@media (max-width: 760px) {
+  :root {
+    --stop-height: 140vh;
+  }
+
+  .story-text,
+  .ritual-text {
+    max-width: none;
+    padding: 18px;
+    background: rgb(246 247 244 / 0.82);
+    backdrop-filter: blur(8px);
+  }
+
+  .story .stop-frame,
+  .ritual .stop-frame {
+    justify-content: flex-end;
+  }
+
+  .story-right .stop-frame {
+    align-items: stretch;
+  }
+
+  .story-text h2,
+  .ritual-text h2,
+  .collection-title {
+    font-size: var(--step-3);
+  }
+
+  .tea-list {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 82vw;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    margin: 0 calc(var(--gutter) * -1);
+  }
+
+  .tea-entry {
+    scroll-snap-align: start;
+  }
+
+  .scroll-hint {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
