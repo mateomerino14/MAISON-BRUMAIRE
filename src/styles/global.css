@@ -253,8 +253,8 @@ main {
 .tea-list {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  background: rgb(246 247 244 / 0.86);
-  backdrop-filter: blur(10px);
+  /* Sólido: con transparencia se ven las sombras y la base de las latas detrás del texto */
+  background: var(--porcelain);
   border-top: 1px solid var(--gold);
 }
 
