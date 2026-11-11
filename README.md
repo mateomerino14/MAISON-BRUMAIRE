@@ -45,10 +45,13 @@ La idea central es la bruma: el fondo de la página y la niebla de la escena com
 | Frases destacadas y precios | Burdeos `#6A2236` | 7.3:1 |
 | Números del ritual | Oro oscuro `#76561F` | 4.4:1 (solo en tamaños grandes) |
 | Botones | Azul de Sèvres `#2B4C9B` | 5.3:1 |
+| Papel de la nota de pedido | `#FBFAF5` | — |
+| Sello de lacre | Burdeos `#6A2236` con texto `#E9D9C0` | 8.0:1 |
 | Filetes y líneas | Oro `#B08D57` | decorativo |
 
 - **Tipografía:** Fraunces para títulos (serif de óptica variable) y Figtree para el texto, a 18 px.
 - **Velo de bruma:** un degradado suave detrás de cada bloque de texto evita que las hojas y los objetos lo ensucien.
+- **Carrito como nota de pedido:** el panel es un *bon de commande* en papel pautado que entra ladeado. Cada renglón se escribe de izquierda a derecha con puntos guía hasta el precio, y el pedido se confirma tocando un sello de lacre que estampa *Commande confirmée*. El envío cuesta 4,90 € y es gratis desde 50 € (valores de la demostración).
 
 ## Estructura
 

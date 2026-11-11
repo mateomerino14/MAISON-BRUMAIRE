@@ -52,3 +52,15 @@ export function countUnits(cart: Cart): number {
 export function totalCents(cart: Cart): number {
   return cartLines(cart).reduce((sum, line) => sum + line.subtotalCents, 0)
 }
+
+export const FREE_SHIPPING_CENTS = 5000
+export const SHIPPING_CENTS = 490
+
+/** Costo del envío: gratis desde FREE_SHIPPING_CENTS y nulo con el carrito vacío. */
+export function shippingCents(cart: Cart): number {
+  const total = totalCents(cart)
+  if (total === 0 || total >= FREE_SHIPPING_CENTS) {
+    return 0
+  }
+  return SHIPPING_CENTS
+}

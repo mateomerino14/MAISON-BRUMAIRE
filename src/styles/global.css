@@ -8,6 +8,13 @@
   --navy: #1b2c5c;
   --bordeaux: #6a2236;
   --gold-text: #76561f;
+  --paper: #fbfaf5;
+  --parchment: #e9d9c0;
+  --bordeaux-light: #93354f;
+  --bordeaux-deep: #4e1727;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --porcelain: #f6f7f4;
   --sevres: #2b4c9b;
   --sevres-deep: #1f3a7a;
@@ -253,8 +260,8 @@ main {
 .tea-list {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  background: rgb(246 247 244 / 0.86);
-  backdrop-filter: blur(10px);
+  /* Sólido: con transparencia se ven las sombras y la base de las latas detrás del texto */
+  background: var(--porcelain);
   border-top: 1px solid var(--gold);
 }
 
@@ -304,6 +311,18 @@ main {
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
+}
+
+.tea-buy button {
+  white-space: nowrap;
+}
+
+/* Ocupa su propia línea arriba del precio, así el precio y el botón quedan alineados en las cuatro fichas */
+.tea-in-cart {
+  flex-basis: 100%;
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--navy);
 }
 
 .tea-price {
@@ -412,120 +431,336 @@ main {
   gap: 6px;
 }
 
-/* Carrito */
+/* Carrito: nota de pedido en papel pautado que se confirma con un sello de lacre */
 .drawer-backdrop {
   position: fixed;
   inset: 0;
   z-index: 8;
-  background: rgb(30 43 51 / 0.28);
+  background: rgb(22 33 42 / 0.22);
+  animation: backdrop-in 0.5s ease both;
 }
 
-.cart-drawer {
+.order-slip {
   position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  top: 24px;
+  right: 32px;
+  bottom: 24px;
   z-index: 9;
-  width: min(420px, 100vw);
-  padding: 22px 26px;
-  background: var(--porcelain);
-  border-left: 1px solid var(--gold);
+  width: min(470px, calc(100vw - 24px));
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  transform: translateX(100%);
+  background-color: var(--paper);
+  /* Margen burdeos y renglones azules cada 36 px, como un bloc de pedidos */
+  background-image:
+    linear-gradient(90deg, transparent 51px, rgb(106 34 54 / 0.45) 51px 52px, transparent 52px),
+    repeating-linear-gradient(180deg, transparent 0 35px, rgb(43 76 155 / 0.14) 35px 36px);
+  background-position:
+    0 0,
+    0 18px;
+  box-shadow: 0 30px 60px -28px rgb(22 33 42 / 0.55);
+  transform-origin: 100% 100%;
+  transform: translateX(calc(100% + 64px)) rotate(7deg);
   visibility: hidden;
   transition:
-    transform 0.35s ease,
-    visibility 0s linear 0.35s;
+    transform 0.95s var(--ease-out),
+    visibility 0s linear 0.95s;
 }
 
-.cart-drawer[data-open='true'] {
-  transform: none;
+.order-slip[data-open='true'] {
+  transform: rotate(-1.2deg);
   visibility: visible;
-  transition: transform 0.35s ease;
+  transition: transform 0.95s var(--ease-out);
 }
 
-.drawer-head {
+.slip-head {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-}
-
-.drawer-head h2 {
-  color: var(--navy);
-  font-family: var(--display);
-  font-weight: 400;
-  font-size: var(--step-2);
-}
-
-.drawer-message {
-  color: var(--text-body);
-}
-
-.cart-lines {
-  display: grid;
   gap: 16px;
+  padding: 30px 30px 10px 72px;
+}
+
+.slip-head h2 {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 2.25rem;
+  line-height: 1;
+  color: var(--navy);
+}
+
+.slip-number {
+  margin-top: 6px;
+  font-size: var(--step--1);
+}
+
+.slip-body {
+  position: relative;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 30px 0 72px;
   overflow-y: auto;
 }
 
-.cart-line {
-  display: grid;
-  grid-template-columns: 10px 1fr auto;
-  gap: 14px;
-  align-items: center;
-}
-
-.cart-swatch {
-  width: 10px;
-  height: 40px;
-}
-
-.cart-line-name {
-  color: var(--navy);
+.slip-blank {
   font-family: var(--display);
   font-style: italic;
-  font-size: 1.15rem;
+  font-size: 1.375rem;
+  line-height: 1.4;
+  color: var(--navy);
+  animation: fade-up 0.7s var(--ease-out) both;
 }
 
-.cart-line-price {
-  font-size: var(--step--1);
-  color: var(--text-body);
+.slip-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
 }
 
-.stepper {
+.slip-line-main {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  animation: write 0.9s cubic-bezier(0.45, 0, 0.2, 1) both;
+}
+
+.slip-line-name {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.3rem;
+  color: var(--navy);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.slip-leader {
+  flex: 1 1 auto;
+  min-width: 16px;
+  border-bottom: 2px dotted rgb(22 33 42 / 0.35);
+  transform: translateY(-5px);
+}
+
+.slip-line-price {
+  font-family: var(--display);
+  font-size: 1.2rem;
+  color: var(--bordeaux);
+  white-space: nowrap;
+}
+
+.slip-line-meta {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-variant-numeric: tabular-nums;
+  margin-top: 8px;
+  font-size: var(--step--1);
+  animation: fade-up 0.7s var(--ease-out) both;
 }
 
-.stepper button {
-  width: 30px;
-  height: 30px;
-  border: 1px solid var(--ink);
-  border-radius: 2px;
-  background: transparent;
-}
-
-.drawer-total {
+.slip-units {
+  font-weight: 600;
   color: var(--ink);
+}
+
+.slip-step {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgb(22 33 42 / 0.45);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink);
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s,
+    transform 0.15s;
+}
+
+.slip-step:hover {
+  background: var(--bordeaux);
+  border-color: var(--bordeaux);
+  color: var(--paper);
+}
+
+.slip-step:active {
+  transform: scale(0.9);
+}
+
+.slip-stamp {
+  position: absolute;
+  top: 40px;
+  left: 60px;
+  right: 20px;
+  width: max-content;
+  margin: 0 auto;
+  padding: 10px 22px;
+  border: 3px solid var(--bordeaux);
+  border-radius: 6px;
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 2.1rem;
+  color: var(--bordeaux);
+  pointer-events: none;
+  animation: stamp 0.6s var(--ease-spring) both;
+}
+
+.slip-foot {
+  margin-top: auto;
+  padding: 24px 0 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: fade-up 0.7s var(--ease-out) both;
+}
+
+.slip-row {
   display: flex;
   justify-content: space-between;
-  padding-top: 14px;
-  border-top: 1px solid var(--gold);
+  font-size: 0.9375rem;
+}
+
+.slip-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
   font-family: var(--display);
-  font-size: var(--step-1);
+  font-size: 1.625rem;
+  color: var(--ink);
 }
 
-.drawer-confirm {
-  padding: 14px;
-  font-size: var(--step-0);
+.slip-total-amount {
+  font-size: 1.875rem;
+  line-height: 1.2;
+  border-bottom: 4px double var(--ink);
 }
 
-.drawer-note {
-  font-size: var(--step--1);
-  color: var(--text-body);
+.slip-seal {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 10px;
+}
+
+.seal-wrap {
+  position: relative;
+  flex: 0 0 auto;
+  width: 92px;
+  height: 92px;
+}
+
+.seal-button {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  /* Radios desparejos: el lacre nunca queda perfectamente redondo */
+  border-radius: 47% 53% 50% 48%;
+  background: radial-gradient(circle at 35% 30%, var(--bordeaux-light), var(--bordeaux) 58%, var(--bordeaux-deep));
+  box-shadow:
+    0 8px 16px -8px rgb(78 23 39 / 0.8),
+    inset 0 0 0 7px rgb(0 0 0 / 0.12);
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.75rem;
+  color: var(--parchment);
+  transition:
+    transform 0.3s var(--ease-spring),
+    box-shadow 0.3s;
+}
+
+.seal-button:hover:not(:disabled) {
+  transform: rotate(-8deg) scale(1.05);
+  box-shadow:
+    0 12px 22px -10px rgb(78 23 39 / 0.8),
+    inset 0 0 0 7px rgb(0 0 0 / 0.12);
+}
+
+.seal-button:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.seal-button:disabled {
+  cursor: default;
+}
+
+.seal-ink {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgb(106 34 54 / 0.45);
+  animation: ink 0.9s 0.15s ease-out both;
+}
+
+.seal-title {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.seal-note {
+  font-size: 0.8125rem;
+}
+
+.link-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--navy);
+  text-decoration: underline;
+  font-size: inherit;
+}
+
+@keyframes backdrop-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes write {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes stamp {
+  0% {
+    opacity: 0;
+    transform: scale(2.4) rotate(-22deg);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.9;
+    transform: scale(1) rotate(-12deg);
+  }
+}
+
+@keyframes ink {
+  from {
+    opacity: 0.5;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.9);
+  }
 }
 
 /* Cortina de carga */
@@ -649,6 +884,27 @@ main {
 
   .tea-entry {
     scroll-snap-align: start;
+  }
+
+  .order-slip {
+    top: 12px;
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .slip-head,
+  .slip-body {
+    padding-right: 20px;
+  }
+
+  .slip-line-name {
+    white-space: normal;
+  }
+
+  .slip-stamp {
+    left: 24px;
+    right: 8px;
+    font-size: 1.5rem;
   }
 
   .scroll-hint {
