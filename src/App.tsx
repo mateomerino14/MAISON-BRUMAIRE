@@ -2,6 +2,7 @@ import { STORY_STOPS } from './content/story'
 import { Experience } from './scene/Experience'
 import { useSmoothScroll } from './scroll/useSmoothScroll'
 import { Hero } from './ui/Hero'
+import { Loader } from './ui/Loader'
 import { StorySection } from './ui/StorySection'
 
 /** Página completa: escena 3D detrás y recorrido de secciones delante. */
@@ -10,6 +11,7 @@ export default function App() {
   return (
     <>
       <Experience />
+      <Loader />
       <main>
         <Hero />
         {STORY_STOPS.map((stop) => (
