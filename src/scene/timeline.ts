@@ -7,6 +7,8 @@ export const TEAPOT_LIFT = { from: 4.35, to: 4.8 } as const
 export const TEAPOT_RETURN = { from: 5.25, to: 5.7 } as const
 export const CUP_FILL = { from: 4.6, to: 5.2 } as const
 export const COLLECTION_RISE = { from: 3.15, to: 3.9 } as const
+export const FEATURE_TIN_ENTER = { from: 0.7, to: 1.3 } as const
+export const FEATURE_TIN_LEAVE = { from: 3.3, to: 3.8 } as const
 
 const LID_RISE = 0.32
 const LID_TILT = 0.38
@@ -64,4 +66,11 @@ export function cupFill(progress: number): number {
 export function collectionReveal(progress: number, index: number): number {
   const delay = index * COLLECTION_STAGGER
   return smootherstep(remap(progress, COLLECTION_RISE.from + delay, COLLECTION_RISE.to + delay))
+}
+
+/** Presencia de la lata protagonista: solo está en escena entre la tetera y la colección. */
+export function featureTinPresence(progress: number): number {
+  const enter = smootherstep(remap(progress, FEATURE_TIN_ENTER.from, FEATURE_TIN_ENTER.to))
+  const leave = smootherstep(remap(progress, FEATURE_TIN_LEAVE.from, FEATURE_TIN_LEAVE.to))
+  return enter * (1 - leave)
 }
