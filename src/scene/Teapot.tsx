@@ -10,6 +10,11 @@ import { Steam } from './Steam'
 import { cupFill, teapotPose } from './timeline'
 
 const STREAM_RADIUS = 0.022
+const STREAM_TAPER = 0.8
+const STREAM_SEGMENTS = 12
+const STREAM_ROUGHNESS = 0.1
+const STREAM_OPACITY = 0.9
+const MIN_STREAM_LENGTH = 0.01
 const STREAM_COLOR = '#8A4B1C'
 const IDLE_STEAM = 0.55
 
@@ -21,7 +26,7 @@ export function Teapot() {
   const stream = useRef<Mesh>(null)
   const tipWorld = useMemo(() => new Vector3(), [])
   const streamMaterial = useMemo(
-    () => new MeshStandardMaterial({ color: STREAM_COLOR, roughness: 0.1, transparent: true, opacity: 0.9 }),
+    () => new MeshStandardMaterial({ color: STREAM_COLOR, roughness: STREAM_ROUGHNESS, transparent: true, opacity: STREAM_OPACITY }),
     [],
   )
 
@@ -38,7 +43,7 @@ export function Teapot() {
     stream.current.visible = pose.pouring
     if (pose.pouring) {
       const surfaceY = CUP_POSITION[1] + teaSurface(cupFill(scrollState.smoothed)).height
-      const length = Math.max(tipWorld.y - surfaceY, 0.01)
+      const length = Math.max(tipWorld.y - surfaceY, MIN_STREAM_LENGTH)
       stream.current.position.set(tipWorld.x, surfaceY + length / 2, tipWorld.z)
       stream.current.scale.set(1, length, 1)
     }
@@ -59,7 +64,7 @@ export function Teapot() {
         <object3D ref={tip} position={[SPOUT_TIP[0], SPOUT_TIP[1] - TEAPOT_PIVOT_HEIGHT, SPOUT_TIP[2]]} />
       </group>
       <mesh ref={stream} material={streamMaterial} visible={false}>
-        <cylinderGeometry args={[STREAM_RADIUS, STREAM_RADIUS * 0.8, 1, 12]} />
+        <cylinderGeometry args={[STREAM_RADIUS, STREAM_RADIUS * STREAM_TAPER, 1, STREAM_SEGMENTS]} />
       </mesh>
       <Steam getOrigin={getSpout} getIntensity={getIdleSteam} />
     </group>

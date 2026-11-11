@@ -7,6 +7,9 @@ import type { Vec3 } from '../scroll/keyframes'
 import { createLabelTexture } from './labelTexture'
 import { MODEL_URLS } from './models'
 
+const LABEL_ROUGHNESS = 0.42
+const LABEL_METALNESS = 0.15
+
 /** Piezas de una lata que se pueden animar desde fuera. */
 export interface TinParts {
   root: Group
@@ -34,7 +37,7 @@ export function TeaTin({ tea, position, rotationY = 0, onFrame }: TeaTinProps) {
       return
     }
     const texture = createLabelTexture(tea)
-    const material = new MeshStandardMaterial({ map: texture, roughness: 0.42, metalness: 0.15, side: DoubleSide })
+    const material = new MeshStandardMaterial({ map: texture, roughness: LABEL_ROUGHNESS, metalness: LABEL_METALNESS, side: DoubleSide })
     label.material = material
     return () => {
       texture.dispose()

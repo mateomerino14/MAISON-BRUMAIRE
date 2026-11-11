@@ -6,9 +6,9 @@ export const CUP_POSITION: Vec3 = [1.75, 0, 0.1]
 export const FEATURE_TIN_POSITION: Vec3 = [-4.4, 0, -1.0]
 export const LEAVES_SWIRL_CENTER: Vec3 = [-5.2, 2.6, -3.8]
 
-export const COLLECTION_ROW_Z = -7
-export const COLLECTION_START_X = -8.85
-export const COLLECTION_SPACING = 1.5
+const COLLECTION_ROW_Z = -7
+const COLLECTION_START_X = -8.85
+const COLLECTION_SPACING = 1.5
 
 /** Altura de la boca de la lata, desde donde salen las hojas. */
 export const TIN_MOUTH_HEIGHT = 1.0

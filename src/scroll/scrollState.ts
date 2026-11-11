@@ -2,13 +2,11 @@
 export interface ScrollState {
   progress: number
   smoothed: number
-  stopCount: number
 }
 
 export const scrollState: ScrollState = {
   progress: 0,
   smoothed: 0,
-  stopCount: 1,
 }
 
 const FOLLOW_SPEED = 4

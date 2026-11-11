@@ -10,6 +10,9 @@ const MAX_OPACITY = 0.32
 const START_SCALE = 0.12
 const END_SCALE = 0.55
 const DRIFT = 0.12
+const SWAY_SPEED = 1.3
+const SWAY_PHASE_STEP = 2.1
+const SWAY_DEPTH_RATIO = 0.5
 
 interface SteamProps {
   /** Escribe en target el punto de donde sale el vapor. */
@@ -58,8 +61,8 @@ export function Steam({ getOrigin, getIntensity }: SteamProps) {
         return
       }
       const life = ((time / LIFE_SECONDS + index / PUFF_COUNT) % 1 + 1) % 1
-      const sway = Math.sin(time * 1.3 + index * 2.1) * DRIFT * life
-      sprite.position.set(origin.x + sway, origin.y + life * RISE_HEIGHT, origin.z + sway * 0.5)
+      const sway = Math.sin(time * SWAY_SPEED + index * SWAY_PHASE_STEP) * DRIFT * life
+      sprite.position.set(origin.x + sway, origin.y + life * RISE_HEIGHT, origin.z + sway * SWAY_DEPTH_RATIO)
       sprite.scale.setScalar(START_SCALE + (END_SCALE - START_SCALE) * life)
       materials[index].opacity = Math.sin(Math.PI * life) * MAX_OPACITY * intensity
     })
