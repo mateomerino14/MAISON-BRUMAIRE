@@ -27,7 +27,8 @@ describe('colección y carrito', () => {
     renderShop()
     const [firstButton] = screen.getAllByRole('button', { name: 'Agregar al carrito' })
     fireEvent.click(firstButton)
-    expect(screen.getByRole('button', { name: 'Agregar otra (1 en el carrito)' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Agregar otra' })).toBeInTheDocument()
+    expect(screen.getByRole('status')).toHaveTextContent('1 en el carrito')
     expect(screen.getByRole('button', { name: 'Abrir el carrito, 1 latas' })).toBeInTheDocument()
   })
 

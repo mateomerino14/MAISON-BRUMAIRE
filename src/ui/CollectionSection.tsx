@@ -11,7 +11,7 @@ function TeaEntry({ tea }: { tea: Tea }) {
   const units = unitsOf(cart, tea.id)
   let buttonLabel = 'Agregar al carrito'
   if (units > 0) {
-    buttonLabel = `Agregar otra (${units} en el carrito)`
+    buttonLabel = 'Agregar otra'
   }
   return (
     <li
@@ -29,6 +29,11 @@ function TeaEntry({ tea }: { tea: Tea }) {
       <p className="tea-notes">{tea.notes}</p>
       <p className="tea-description">{tea.description}</p>
       <div className="tea-buy">
+        {units > 0 && (
+          <p className="tea-in-cart" role="status">
+            {units} en el carrito
+          </p>
+        )}
         <span className="tea-price">{formatPrice(tea.priceCents)}</span>
         <button type="button" onClick={() => add(tea.id)}>
           {buttonLabel}
