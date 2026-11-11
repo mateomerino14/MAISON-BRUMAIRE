@@ -1,4 +1,5 @@
-/* Variables de diseño: la bruma del Sena, porcelana, azul de Sèvres y filete de oro. */
+/* Variables de diseño: la bruma del Sena, porcelana, azul de Sèvres y filete de oro.
+   Fraunces (títulos) es una serif cálida de óptica variable; Figtree (texto) se lee bien en tamaños chicos. */
 :root {
   --brume: #c9d3d2;
   --ink: #1e2b33;
@@ -8,8 +9,8 @@
   --sevres-deep: #1f3a7a;
   --gold: #b08d57;
 
-  --display: 'Bodoni Moda', 'Didot', serif;
-  --text: 'Instrument Sans', system-ui, sans-serif;
+  --display: 'Fraunces', Georgia, serif;
+  --text: 'Figtree', system-ui, sans-serif;
 
   --step--1: 0.875rem;
   --step-0: 1.0625rem;
@@ -36,7 +37,7 @@ body {
   margin: 0;
   color: var(--ink);
   font-family: var(--text);
-  font-size: var(--step-0);
+  font-size: 1.125rem;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
@@ -145,8 +146,7 @@ main {
   font-weight: 400;
   font-size: clamp(4rem, 12.5vw, 13.5rem);
   line-height: 0.86;
-  letter-spacing: -0.035em;
-  font-variation-settings: 'opsz' 96;
+  letter-spacing: -0.03em;
   max-width: 7ch;
 }
 
