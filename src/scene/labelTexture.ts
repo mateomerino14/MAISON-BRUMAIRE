@@ -14,6 +14,7 @@ const DETAIL_FONT = '500 28px "Figtree", sans-serif'
 const BRAND_Y = 150
 const NAME_Y = 268
 const DETAIL_Y = 352
+const ANISOTROPY = 8
 
 /** Pinta la etiqueta de una lata: color del té, filetes dorados y nombre al frente. */
 function paintLabel(context: CanvasRenderingContext2D, tea: Tea): void {
@@ -45,7 +46,7 @@ export function createLabelTexture(tea: Tea): CanvasTexture {
   texture.flipY = false
   texture.wrapS = RepeatWrapping
   texture.repeat.x = -1
-  texture.anisotropy = 8
+  texture.anisotropy = ANISOTROPY
 
   const context = canvas.getContext('2d')
   if (context === null) {

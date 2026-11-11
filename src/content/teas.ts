@@ -61,12 +61,3 @@ export const TEAS: readonly Tea[] = [
     inkColor: '#1E2B33',
   },
 ]
-
-/** Busca un té por su identificador. */
-export function findTea(id: TeaId): Tea {
-  const tea = TEAS.find((candidate) => candidate.id === id)
-  if (tea === undefined) {
-    throw new Error(`No existe el té ${id}`)
-  }
-  return tea
-}

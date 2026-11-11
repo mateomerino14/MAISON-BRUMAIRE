@@ -1,14 +1,14 @@
 import { remap, smootherstep } from '../scroll/keyframes'
 
 /** Tramos del recorrido, medidos en paradas del scroll. */
-export const LID_OPEN = { from: 1.4, to: 2.1 } as const
-export const LEAVES_FLIGHT = { from: 1.8, to: 3.9 } as const
+const LID_OPEN = { from: 1.4, to: 2.1 } as const
+const LEAVES_FLIGHT = { from: 1.8, to: 3.9 } as const
 export const TEAPOT_LIFT = { from: 4.35, to: 4.8 } as const
 export const TEAPOT_RETURN = { from: 5.25, to: 5.7 } as const
 export const CUP_FILL = { from: 4.6, to: 5.2 } as const
 export const COLLECTION_RISE = { from: 3.15, to: 3.9 } as const
-export const FEATURE_TIN_ENTER = { from: 0.7, to: 1.3 } as const
-export const FEATURE_TIN_LEAVE = { from: 3.3, to: 3.8 } as const
+const FEATURE_TIN_ENTER = { from: 0.7, to: 1.3 } as const
+const FEATURE_TIN_LEAVE = { from: 3.3, to: 3.8 } as const
 
 const LID_RISE = 0.32
 const LID_TILT = 0.38
