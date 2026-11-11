@@ -32,13 +32,15 @@ describe('colección y carrito', () => {
     expect(screen.getByRole('button', { name: 'Abrir el carrito, 1 latas' })).toBeInTheDocument()
   })
 
-  it('confirmar el pedido vacía el carrito y avisa que es una demostración', () => {
+  it('sellar la nota vacía el carrito y avisa que es una demostración', () => {
     renderShop()
     fireEvent.click(screen.getAllByRole('button', { name: 'Agregar al carrito' })[1])
     fireEvent.click(screen.getByRole('button', { name: /Abrir el carrito/ }))
     const drawer = screen.getByRole('dialog', { name: 'Carrito' })
-    fireEvent.click(within(drawer).getByRole('button', { name: 'Confirmar pedido' }))
-    expect(within(drawer).getByRole('status')).toHaveTextContent('no se cobró nada')
+    expect(within(drawer).getByText('Jardin du Luxembourg')).toBeInTheDocument()
+    fireEvent.click(within(drawer).getByRole('button', { name: 'Sellar y confirmar el pedido' }))
+    expect(within(drawer).getByRole('status')).toHaveTextContent('No se cobró nada')
+    expect(within(drawer).getByText('Commande confirmée')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Abrir el carrito, 0 latas' })).toBeInTheDocument()
   })
 })
