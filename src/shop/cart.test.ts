@@ -1,6 +1,18 @@
 import { describe, expect, it } from 'vitest'
 import { TEAS } from '../content/teas'
-import { addItem, cartLines, countUnits, EMPTY_CART, MAX_UNITS_PER_TEA, removeItem, totalCents, unitsOf } from './cart'
+import {
+  addItem,
+  cartLines,
+  countUnits,
+  EMPTY_CART,
+  FREE_SHIPPING_CENTS,
+  MAX_UNITS_PER_TEA,
+  removeItem,
+  SHIPPING_CENTS,
+  shippingCents,
+  totalCents,
+  unitsOf,
+} from './cart'
 
 describe('carrito', () => {
   it('suma latas y calcula el total', () => {
@@ -34,5 +46,25 @@ describe('carrito', () => {
     const cart = addItem(EMPTY_CART, 'montmartre')
     addItem(cart, 'montmartre')
     expect(unitsOf(cart, 'montmartre')).toBe(1)
+  })
+})
+
+describe('envío', () => {
+  it('no cobra envío con el carrito vacío', () => {
+    expect(shippingCents(EMPTY_CART)).toBe(0)
+  })
+
+  it('cobra envío por debajo del mínimo', () => {
+    expect(totalCents(addItem(EMPTY_CART, 'montmartre'))).toBeLessThan(FREE_SHIPPING_CENTS)
+    expect(shippingCents(addItem(EMPTY_CART, 'montmartre'))).toBe(SHIPPING_CENTS)
+  })
+
+  it('el envío es gratis desde el mínimo', () => {
+    let cart = EMPTY_CART
+    for (let i = 0; i < 3; i++) {
+      cart = addItem(cart, 'montmartre')
+    }
+    expect(totalCents(cart)).toBeGreaterThanOrEqual(FREE_SHIPPING_CENTS)
+    expect(shippingCents(cart)).toBe(0)
   })
 })
