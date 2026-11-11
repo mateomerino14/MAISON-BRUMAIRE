@@ -25,8 +25,16 @@ const MAX_DELAY = 0.15
 const ORBIT_TURNS = 5
 const ORBIT_SPEED = 0.25
 const SPREAD_GROWTH = 0.8
+const TWIST_SPEED = 0.1
 
-/** Generador pseudoaleatorio reproducible (mulberry32). */
+/** Rangos de las semillas: cada valor sale de min + aleatorio × rango. */
+const SEED_RADIUS = { min: 0.6, range: 1.8 } as const
+const SEED_HEIGHT_RANGE = 2.2
+const SEED_SPEED = { min: 0.5, range: 1 } as const
+const SEED_SPIN_RANGE = 4
+const SEED_SIZE = { min: 0.12, range: 0.1 } as const
+
+/** Generador pseudoaleatorio reproducible (mulberry32); sus constantes son las del algoritmo publicado. */
 export function createRandom(seed: number): () => number {
   let state = seed >>> 0
   return () => {
@@ -43,11 +51,11 @@ export function createLeafSeeds(count: number, seed: number): LeafSeed[] {
   const random = createRandom(seed)
   return Array.from({ length: count }, () => ({
     angle: random() * Math.PI * 2,
-    radius: 0.6 + random() * 1.8,
-    height: (random() - 0.5) * 2.2,
-    speed: 0.5 + random(),
-    spin: (random() - 0.5) * 4,
-    size: 0.12 + random() * 0.1,
+    radius: SEED_RADIUS.min + random() * SEED_RADIUS.range,
+    height: (random() - 0.5) * SEED_HEIGHT_RANGE,
+    speed: SEED_SPEED.min + random() * SEED_SPEED.range,
+    spin: (random() - 0.5) * SEED_SPIN_RANGE,
+    size: SEED_SIZE.min + random() * SEED_SIZE.range,
     delay: random() * MAX_DELAY,
   }))
 }
@@ -66,7 +74,7 @@ export function leafTransform(seed: LeafSeed, flight: number, time: number, mout
     base[1] + seed.height * gather,
     base[2] + Math.sin(angle) * radius,
   ]
-  const twist = seed.spin * (local + time * 0.1)
+  const twist = seed.spin * (local + time * TWIST_SPEED)
   return {
     position,
     rotation: [twist, angle, twist * 0.5],
