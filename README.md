@@ -51,7 +51,7 @@ La idea central es la bruma: el fondo de la página y la niebla de la escena com
 
 - **Tipografía:** Fraunces para títulos (serif de óptica variable) y Figtree para el texto, a 18 px.
 - **Velo de bruma:** un degradado suave detrás de cada bloque de texto evita que las hojas y los objetos lo ensucien.
-- **Carrito como nota de pedido:** el panel es un *bon de commande* en papel pautado que entra ladeado. Cada renglón se escribe de izquierda a derecha con puntos guía hasta el precio, y el pedido se confirma tocando un sello de lacre que estampa *Commande confirmée*. El envío cuesta 4,90 € y es gratis desde 50 € (valores de la demostración).
+- **Carrito como nota de pedido:** el panel es una nota de pedido en papel pautado que entra ladeado. Cada renglón se escribe de izquierda a derecha con puntos guía hasta el precio, y el pedido se confirma tocando un sello de lacre que estampa *Pedido confirmado*. El envío cuesta 4,90 € y es gratis desde 50 € (valores de la demostración).
 
 ## Estructura
 
