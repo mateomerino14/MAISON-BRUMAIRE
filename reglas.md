@@ -92,7 +92,7 @@ export function addItem(cart: Cart, id: TeaId): Cart {
 
 ### Sintaxis
 
-El formato y el lint se validan con oxlint (`npm run lint`) y el tipado con TypeScript en modo estricto (`npm run typecheck`). Las herramientas en Python se validan con Ruff (`ruff check tools` y `ruff format --check tools`).
+El formato y el lint se validan con oxlint (`npm run lint`) y el tipado con TypeScript en modo estricto (`npm run typecheck`). El código muerto se revisa con knip (`npx knip` debe salir sin hallazgos). Las herramientas en Python se validan con Ruff (`ruff check tools` y `ruff format --check tools`).
 
 **Tipado estricto siempre.** No se usa `any`; las props de cada componente tienen su tipo.
 
@@ -109,7 +109,9 @@ if (units > 0) {
 const label = units > 0 ? `En el carrito (${units})` : 'Agregar'
 ```
 
-**Evitar valores mágicos**; se declaran como constantes con nombre en `CONSTANT_CASE`. Las posiciones y tiempos de la escena viven en tablas de configuración (`src/scroll/keyframes.ts`, `src/scene/layout.ts`).
+**Evitar valores mágicos**; se declaran como constantes con nombre en `CONSTANT_CASE`. Las posiciones y tiempos de la escena viven en tablas de configuración (`src/scroll/keyframes.ts`, `src/scene/layout.ts`, `src/scene/timeline.ts`). Los datos del catálogo y los textos no cuentan como valores mágicos.
+
+**Exportar solo lo que se usa fuera del módulo.** Las constantes internas no se exportan; las que leen las pruebas sí.
 
 **Nombres:**
 
@@ -122,6 +124,15 @@ const label = units > 0 ? `En el carrito (${units})` : 'Agregar'
 | Tipos | `PascalCase` | `CameraKeyframe` |
 | Constantes | `CONSTANT_CASE` | `MAX_UNITS_PER_TEA` |
 | Clases CSS | `kebab-case` | `tea-card` |
+
+---
+
+## DISEÑO
+
+- Los colores y fuentes se definen como variables en `src/styles/global.css`. En el CSS se usan las variables; una transparencia de un color de la paleta se escribe como `rgb()` del mismo valor. En la escena, los colores van en constantes con nombre.
+- Todo texto debe superar un contraste de 4.5:1 sobre su fondo (3:1 si mide 24 px o más). El oro `#B08D57` es solo para líneas y filetes, nunca para texto.
+- Fraunces para títulos y Figtree para el texto. Las etiquetas de las latas usan las mismas fuentes.
+- Los textos que pasan sobre la escena llevan el velo de bruma.
 
 ---
 
