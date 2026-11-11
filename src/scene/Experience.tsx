@@ -3,7 +3,9 @@ import { Canvas } from '@react-three/fiber'
 import { Suspense } from 'react'
 import { sampleCamera } from '../scroll/keyframes'
 import { CameraRig } from './CameraRig'
+import { FeatureTin } from './FeatureTin'
 import { FOG_COLOR, FOG_FAR, FOG_NEAR } from './layout'
+import { Leaves } from './Leaves'
 import { preloadModels } from './models'
 import { TeaCup } from './TeaCup'
 import { Teapot } from './Teapot'
@@ -48,6 +50,8 @@ export function Experience() {
         <Suspense fallback={null}>
           <Teapot />
           <TeaCup />
+          <FeatureTin />
+          <Leaves />
         </Suspense>
         <ContactShadows position={[-3.5, 0.002, -3.5]} scale={22} resolution={1024} far={2.2} blur={2.6} opacity={0.32} color={SHADOW_COLOR} />
       </Canvas>
