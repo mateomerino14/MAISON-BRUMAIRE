@@ -44,6 +44,12 @@ html {
   background: var(--brume);
 }
 
+/* La nota cerrada espera fuera de la pantalla; sin esto, en celular agranda el ancho de la página y el navegador la achica */
+html,
+body {
+  overflow-x: clip;
+}
+
 body {
   margin: 0;
   color: var(--text-body);
