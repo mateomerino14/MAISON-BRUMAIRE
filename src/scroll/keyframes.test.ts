@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest'
 import { CAMERA_KEYFRAMES, clamp, remap, responsiveView, sampleCamera, smootherstep, type CameraKeyframe } from './keyframes'
 
 const TWO_STOPS: CameraKeyframe[] = [
-  { position: [0, 0, 0], target: [0, 0, -1], focus: [0, 0, -1] },
-  { position: [10, 2, 0], target: [10, 0, -1], focus: [10, 0, -1] },
+  { position: [0, 0, 0], target: [0, 0, -1], focus: [0, 0, -1], narrowZoom: 1 },
+  { position: [10, 2, 0], target: [10, 0, -1], focus: [10, 0, -1], narrowZoom: 2 },
 ]
 
 describe('sampleCamera', () => {
@@ -14,7 +14,9 @@ describe('sampleCamera', () => {
   })
 
   it('pasa por el punto medio a mitad de camino', () => {
-    expect(sampleCamera(0.5, TWO_STOPS).position).toEqual([5, 1, 0])
+    const middle = sampleCamera(0.5, TWO_STOPS)
+    expect(middle.position).toEqual([5, 1, 0])
+    expect(middle.narrowZoom).toBeCloseTo(1.5)
   })
 
   it('no se sale del recorrido antes de la primera ni después de la última parada', () => {
@@ -44,12 +46,13 @@ describe('utilidades de interpolación', () => {
 
 describe('responsiveView', () => {
   it('no toca la cámara en pantallas anchas', () => {
-    expect(responsiveView(16 / 9)).toEqual({ narrowness: 0, fov: 34, distanceScale: 1, targetDrop: 0 })
+    expect(responsiveView(16 / 9)).toEqual({ narrowness: 0, fov: 34, targetDrop: 0 })
   })
 
-  it('en un celular vertical abre el ángulo y aleja la cámara', () => {
+  it('en un celular vertical abre el ángulo y sube los objetos', () => {
     const phone = responsiveView(390 / 844)
+    expect(phone.narrowness).toBeGreaterThan(0.9)
     expect(phone.fov).toBeGreaterThan(34)
-    expect(phone.distanceScale).toBeGreaterThan(1)
+    expect(phone.targetDrop).toBeGreaterThan(0)
   })
 })
