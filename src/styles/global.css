@@ -452,13 +452,19 @@ main {
   right: 32px;
   bottom: 24px;
   z-index: 9;
+  --slip-margin: 51px;
   width: min(470px, calc(100vw - 24px));
   display: flex;
   flex-direction: column;
   background-color: var(--paper);
   /* Margen burdeos y renglones azules cada 36 px, como un bloc de pedidos */
   background-image:
-    linear-gradient(90deg, transparent 51px, rgb(106 34 54 / 0.45) 51px 52px, transparent 52px),
+    linear-gradient(
+      90deg,
+      transparent var(--slip-margin),
+      rgb(106 34 54 / 0.45) var(--slip-margin) calc(var(--slip-margin) + 1px),
+      transparent calc(var(--slip-margin) + 1px)
+    ),
     repeating-linear-gradient(180deg, transparent 0 35px, rgb(43 76 155 / 0.14) 35px 36px);
   background-position:
     0 0,
@@ -483,7 +489,7 @@ main {
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
-  padding: 30px 30px 10px 72px;
+  padding: 30px 30px 10px calc(var(--slip-margin) + 21px);
 }
 
 .slip-head h2 {
@@ -505,7 +511,7 @@ main {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  padding: 18px 30px 0 72px;
+  padding: 18px 30px 0 calc(var(--slip-margin) + 21px);
   overflow-y: auto;
 }
 
@@ -595,9 +601,11 @@ main {
   transform: scale(0.9);
 }
 
+/* Fuera del área con scroll, para que el sello nunca quede recortado */
 .slip-stamp {
   position: absolute;
-  top: 40px;
+  z-index: 1;
+  top: 150px;
   left: 60px;
   right: 20px;
   width: max-content;
@@ -614,8 +622,9 @@ main {
 }
 
 .slip-foot {
+  flex: 0 0 auto;
   margin-top: auto;
-  padding: 24px 0 30px;
+  padding: 24px 30px 30px calc(var(--slip-margin) + 21px);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -892,10 +901,54 @@ main {
     scroll-snap-align: start;
   }
 
+  /*
+   * Celular: la nota es una hoja que sube desde abajo con el alto de su contenido.
+   * Nunca pasa del alto visible (dvh descuenta la barra del navegador); si hay muchos tés, scroll por dentro.
+   */
   .order-slip {
-    top: 12px;
-    right: 12px;
-    bottom: 12px;
+    top: auto;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    width: auto;
+    max-height: calc(100vh - 20px);
+    max-height: calc(100dvh - 20px);
+    transform-origin: 50% 100%;
+    transform: translateY(calc(100% + 40px)) rotate(4deg);
+  }
+
+  .order-slip[data-open='true'] {
+    transform: rotate(-0.6deg);
+  }
+
+  .slip-head {
+    padding-top: 22px;
+  }
+
+  .slip-head h2 {
+    font-size: 1.875rem;
+  }
+
+  .slip-body {
+    flex: 0 1 auto;
+  }
+
+  .order-slip {
+    --slip-margin: 30px;
+  }
+
+  .slip-foot {
+    margin-top: 0;
+    padding-top: 18px;
+    padding-bottom: 20px;
+  }
+
+  .slip-line-name {
+    font-size: 1.15rem;
+  }
+
+  .slip-body {
+    padding-bottom: 4px;
   }
 
   .slip-head,
@@ -908,6 +961,7 @@ main {
   }
 
   .slip-stamp {
+    top: 110px;
     left: 24px;
     right: 8px;
     font-size: 1.5rem;
