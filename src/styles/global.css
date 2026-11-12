@@ -907,8 +907,76 @@ main {
     font-size: 1.5rem;
   }
 
+  .ritual-steps {
+    gap: 12px;
+  }
+
+  .ritual-steps li::before {
+    font-size: var(--step-2);
+  }
+
+  .ritual-steps p {
+    font-size: 0.9375rem;
+    line-height: 1.45;
+  }
+
   .scroll-hint {
     display: none;
+  }
+}
+
+/*
+ * Celular: los textos van abajo y la escena arriba. Para que un texto no cruce por encima de los objetos
+ * al pasar de una parada a otra, aparece solo mientras su sección está fija y se desvanece al irse.
+ * El tramo visible (42 % a 58 %) es el que la sección pasa fija: 100vh de 240vh en una sección de 140vh.
+ */
+@supports (animation-timeline: view()) {
+  @media (max-width: 760px) {
+    .stop {
+      view-timeline-name: --stop;
+    }
+
+    .stop-frame > * {
+      animation: stop-fade linear both;
+      animation-timeline: --stop;
+    }
+
+    .hero .stop-frame > *,
+    .closing .stop-frame > * {
+      animation-name: stop-fade-edge;
+    }
+  }
+}
+
+@keyframes stop-fade {
+  0%,
+  30% {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  42%,
+  58% {
+    opacity: 1;
+    transform: none;
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: translateY(-32px);
+  }
+}
+
+/* Portada y cierre: la página empieza y termina con ellos fijos, así que no se desvanecen del todo */
+@keyframes stop-fade-edge {
+  0%,
+  58% {
+    opacity: 1;
+    transform: none;
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: translateY(-32px);
   }
 }
 
