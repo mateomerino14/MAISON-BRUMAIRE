@@ -40,7 +40,7 @@ describe('colección y carrito', () => {
     expect(within(drawer).getByText('Jardin du Luxembourg')).toBeInTheDocument()
     fireEvent.click(within(drawer).getByRole('button', { name: 'Sellar y confirmar el pedido' }))
     expect(within(drawer).getByRole('status')).toHaveTextContent('No se cobró nada')
-    expect(within(drawer).getByText('Commande confirmée')).toBeInTheDocument()
+    expect(within(drawer).getByText('Pedido confirmado')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Abrir el carrito, 0 latas' })).toBeInTheDocument()
   })
 })

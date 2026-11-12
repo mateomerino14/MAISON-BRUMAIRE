@@ -1,22 +1,26 @@
 /** Vector de tres componentes en coordenadas de la escena. */
 export type Vec3 = readonly [number, number, number]
 
-/** Pose de la cámara en una parada; focus es el centro del objeto, al que se apunta en pantallas angostas. */
+/**
+ * Pose de la cámara en una parada. En pantallas angostas la cámara apunta a focus (el centro del objeto)
+ * y multiplica su distancia por narrowZoom, para que cada objeto llene el ancho del celular.
+ */
 export interface CameraKeyframe {
   position: Vec3
   target: Vec3
   focus: Vec3
+  narrowZoom: number
 }
 
 /** Una pose por sección; el índice coincide con el número de parada del scroll. */
 export const CAMERA_KEYFRAMES: readonly CameraKeyframe[] = [
-  { position: [1.0, 1.7, 7.4], target: [-0.9, 1.15, 0], focus: [0.8, 0.75, 0] },
-  { position: [-3.9, 2.3, 5.0], target: [-1.1, 0.75, -0.6], focus: [0.3, 0.7, 0] },
-  { position: [-0.2, 1.9, -1.4], target: [-4.4, 0.75, -2.4], focus: [-4.4, 0.8, -1.0] },
-  { position: [-3.0, 2.6, 1.4], target: [-5.2, 3.5, -3.8], focus: [-5.2, 2.8, -3.8] },
-  { position: [-6.6, 2.3, 0.2], target: [-6.6, 0.45, -7.0], focus: [-6.6, 0.55, -7.0] },
-  { position: [1.4, 1.9, 6.6], target: [-0.5, 1.0, 0], focus: [0.9, 0.95, 0] },
-  { position: [1.0, 4.6, 8.4], target: [0.9, 1.5, 0], focus: [0.9, 0.6, 0] },
+  { position: [1.0, 1.7, 7.4], target: [-0.9, 1.15, 0], focus: [0.6, 0.75, 0], narrowZoom: 1.35 },
+  { position: [-3.9, 2.3, 5.0], target: [-1.1, 0.75, -0.6], focus: [0.5, 0.7, 0], narrowZoom: 1.3 },
+  { position: [-0.2, 1.9, -1.4], target: [-4.4, 0.75, -2.4], focus: [-4.4, 0.8, -1.0], narrowZoom: 0.95 },
+  { position: [-3.0, 2.6, 1.4], target: [-5.2, 3.5, -3.8], focus: [-5.2, 2.8, -3.8], narrowZoom: 1.2 },
+  { position: [-6.6, 2.3, 0.2], target: [-6.6, 0.45, -7.0], focus: [-6.6, 0.55, -7.0], narrowZoom: 1.75 },
+  { position: [1.4, 1.9, 6.6], target: [-0.5, 1.0, 0], focus: [0.9, 0.95, 0], narrowZoom: 1.2 },
+  { position: [1.0, 4.6, 8.4], target: [0.9, 1.5, 0], focus: [0.9, 0.6, 0], narrowZoom: 1.0 },
 ]
 
 /** Recorta un valor al intervalo [min, max]. */
@@ -55,6 +59,7 @@ export function sampleCamera(progress: number, keyframes: readonly CameraKeyfram
     position: lerpVec3(from.position, to.position, local),
     target: lerpVec3(from.target, to.target, local),
     focus: lerpVec3(from.focus, to.focus, local),
+    narrowZoom: from.narrowZoom + (to.narrowZoom - from.narrowZoom) * local,
   }
 }
 
@@ -62,24 +67,21 @@ export function sampleCamera(progress: number, keyframes: readonly CameraKeyfram
 export interface ResponsiveView {
   narrowness: number
   fov: number
-  distanceScale: number
   targetDrop: number
 }
 
 const WIDE_ASPECT = 1.2
 const NARROW_ASPECT = 0.45
 const WIDE_FOV = 34
-const NARROW_FOV = 56
-const NARROW_DISTANCE_SCALE = 1.35
-const NARROW_TARGET_DROP = 0.45
+const NARROW_FOV = 50
+const NARROW_TARGET_DROP = 0.5
 
-/** En pantallas angostas abre el ángulo, aleja la cámara y sube los objetos sobre los textos. */
+/** En pantallas angostas abre un poco el ángulo y sube los objetos para dejar sitio a los textos de abajo. */
 export function responsiveView(aspect: number): ResponsiveView {
   const narrowness = remap(aspect, WIDE_ASPECT, NARROW_ASPECT)
   return {
     narrowness,
     fov: WIDE_FOV + (NARROW_FOV - WIDE_FOV) * narrowness,
-    distanceScale: 1 + (NARROW_DISTANCE_SCALE - 1) * narrowness,
     targetDrop: NARROW_TARGET_DROP * narrowness,
   }
 }

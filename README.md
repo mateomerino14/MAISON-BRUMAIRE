@@ -30,7 +30,7 @@ Tienda ficticia de tés franceses contada con una escena 3D que avanza con el sc
 2. **Cámara.** `src/scroll/keyframes.ts` guarda una pose de cámara por parada. `sampleCamera` interpola entre las dos más cercanas con una curva suave, y `CameraRig` la aplica en cada cuadro con un leve paralaje que sigue al puntero.
 3. **Animaciones.** `src/scene/timeline.ts` define en qué tramo del recorrido pasa cada cosa: la lata protagonista surge de la bruma y abre la tapa, las hojas vuelan en espiral, la colección emerge lata por lata, la tetera sirve y la taza se llena. Son funciones puras del progreso: al subir el scroll todo se rebobina solo.
 4. **Sin renders de más.** El progreso vive en un objeto fuera de React; la escena lo lee dentro de `useFrame`, así que el scroll no vuelve a renderizar componentes.
-5. **Pantallas angostas.** Cada parada guarda también el centro de su objeto (`focus`). En un celular la cámara abre el ángulo, se aleja y apunta a ese centro, porque los textos pasan a la parte de abajo.
+5. **Celular.** Cada parada guarda también el centro de su objeto (`focus`) y su propio acercamiento (`narrowZoom`). En un celular la cámara apunta a ese centro y ajusta la distancia para que el objeto llene el ancho de la pantalla, con los textos abajo. Entre parada y parada, los textos se desvanecen con animaciones ligadas al scroll (`animation-timeline: view()`), así nunca cruzan por encima de la escena.
 6. **Etiquetas.** Las etiquetas de las latas se dibujan en un `canvas` con el color y el nombre de cada té, y se repintan cuando terminan de cargar las fuentes.
 
 ## Diseño
@@ -51,7 +51,7 @@ La idea central es la bruma: el fondo de la página y la niebla de la escena com
 
 - **Tipografía:** Fraunces para títulos (serif de óptica variable) y Figtree para el texto, a 18 px.
 - **Velo de bruma:** un degradado suave detrás de cada bloque de texto evita que las hojas y los objetos lo ensucien.
-- **Carrito como nota de pedido:** el panel es un *bon de commande* en papel pautado que entra ladeado. Cada renglón se escribe de izquierda a derecha con puntos guía hasta el precio, y el pedido se confirma tocando un sello de lacre que estampa *Commande confirmée*. El envío cuesta 4,90 € y es gratis desde 50 € (valores de la demostración).
+- **Carrito como nota de pedido:** el panel es una nota de pedido en papel pautado que entra ladeado. Cada renglón se escribe de izquierda a derecha con puntos guía hasta el precio, y el pedido se confirma tocando un sello de lacre que estampa *Pedido confirmado*. El envío cuesta 4,90 € y es gratis desde 50 € (valores de la demostración).
 
 ## Estructura
 

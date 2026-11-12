@@ -132,7 +132,7 @@ export function CartDrawer() {
       <aside className="order-slip" data-open={isOpen} aria-hidden={!isOpen} aria-label="Carrito" role="dialog">
         <div className="slip-head">
           <div>
-            <h2>Bon de commande</h2>
+            <h2>Nota de pedido</h2>
             <p className="slip-number">{ORDER_NUMBER}</p>
           </div>
           <button type="button" ref={closeButton} className="button-quiet" onClick={close}>
@@ -161,7 +161,7 @@ export function CartDrawer() {
 
             {isSealed && (
               <p className="slip-stamp" aria-hidden="true">
-                Commande confirmée
+                Pedido confirmado
               </p>
             )}
 
