@@ -158,56 +158,56 @@ export function CartDrawer() {
                 ))}
               </ul>
             )}
+          </div>
+        )}
 
-            {isSealed && (
-              <p className="slip-stamp" aria-hidden="true">
-                Pedido confirmado
-              </p>
-            )}
+        {isOpen && isSealed && (
+          <p className="slip-stamp" aria-hidden="true">
+            Pedido confirmado
+          </p>
+        )}
 
-            {!isBlank && (
-              <div className="slip-foot" style={slipDelay(shownLines.length, FOOTER_DELAY_SECONDS)}>
-                <div className="slip-row">
-                  <span>Envío</span>
-                  <span>{shippingLabel}</span>
-                </div>
-                <div className="slip-total">
-                  <span>Total</span>
-                  <span className="slip-total-amount">{formatPrice(subtotal + shipping)}</span>
-                </div>
-                <div className="slip-seal">
-                  <div className="seal-wrap">
-                    {isSealed && <span className="seal-ink" aria-hidden="true" />}
-                    <button
-                      type="button"
-                      className="seal-button"
-                      onClick={seal}
-                      disabled={isSealed}
-                      aria-label="Sellar y confirmar el pedido"
-                    >
-                      MB
-                    </button>
-                  </div>
-                  {!isSealed && (
-                    <div>
-                      <p className="seal-title">Sellar el pedido</p>
-                      <p className="seal-note">Toca el lacre para confirmar. Es una demostración: no se cobra nada.</p>
-                    </div>
-                  )}
-                  {isSealed && (
-                    <div role="status">
-                      <p className="seal-title">Pedido sellado</p>
-                      <p className="seal-note">
-                        No se cobró nada.{' '}
-                        <button type="button" className="link-button" onClick={() => setSealed(null)}>
-                          Empezar otra nota
-                        </button>
-                      </p>
-                    </div>
-                  )}
-                </div>
+        {isOpen && !isBlank && (
+          <div className="slip-foot" style={slipDelay(shownLines.length, FOOTER_DELAY_SECONDS)}>
+            <div className="slip-row">
+              <span>Envío</span>
+              <span>{shippingLabel}</span>
+            </div>
+            <div className="slip-total">
+              <span>Total</span>
+              <span className="slip-total-amount">{formatPrice(subtotal + shipping)}</span>
+            </div>
+            <div className="slip-seal">
+              <div className="seal-wrap">
+                {isSealed && <span className="seal-ink" aria-hidden="true" />}
+                <button
+                  type="button"
+                  className="seal-button"
+                  onClick={seal}
+                  disabled={isSealed}
+                  aria-label="Sellar y confirmar el pedido"
+                >
+                  MB
+                </button>
               </div>
-            )}
+              {!isSealed && (
+                <div>
+                  <p className="seal-title">Sellar el pedido</p>
+                  <p className="seal-note">Toca el lacre para confirmar. Es una demostración: no se cobra nada.</p>
+                </div>
+              )}
+              {isSealed && (
+                <div role="status">
+                  <p className="seal-title">Pedido sellado</p>
+                  <p className="seal-note">
+                    No se cobró nada.{' '}
+                    <button type="button" className="link-button" onClick={() => setSealed(null)}>
+                      Empezar otra nota
+                    </button>
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </aside>
